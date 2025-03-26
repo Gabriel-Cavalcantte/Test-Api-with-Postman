@@ -1,0 +1,36 @@
+name: Teste de API com Newman
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Newman
+        run: npm install -g newman newman-reporter-html
+
+      - name: Run API Tests
+        run: |
+          mkdir -p reports/newman
+          newman run test/collections/api-tests.json \
+          --environment test/environments/env.environment.json \
+          --reporters cli,html \
+          --reporter-html-export reports/newman/report.html
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Newman Test Report
+          path: reports/newman/report.html

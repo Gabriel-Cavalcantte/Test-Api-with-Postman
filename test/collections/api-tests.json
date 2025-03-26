@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "7a7e9e2a-2488-468c-9722-9ec3a1112dea",
+		"name": "Teste_de_Postman",
+		"description": "**Teste de Api com Postman**\n\n- Uso de variaveis de ambiente\n    \n- Validações com testes em JavaScript",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43512381"
+	},
+	"item": [
+		{
+			"name": "Pet",
+			"item": [
+				{
+					"name": "Post",
+					"item": [
+						{
+							"name": "Cadastrar novo pet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 1000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response no formato json\"), function () {\r",
+											"    pm.response.to.have.jsonBody();\r",
+											"}\r",
+											"const schema = {\r",
+											"    \"type\": \"object\",\r",
+											"        \"properties\": {\r",
+											"            \"id\":                                               { \"type\": [\"number\",\"null\"]},\r",
+											"                \"category\":{ \r",
+											"                    \"type\": \"object\",\r",
+											"                        \"properties\": {       \r",
+											"                        \"id\":                                   { \"type\": [\"number\",\"null\"]},\r",
+											"                        \"name\":                                 { \"type\": [\"string\",\"null\"]}\r",
+											"                },\r",
+											"            \"name\":                                             { \"type\": [\"string\",\"null\"]},\r",
+											"            \"photoUrls\":{ \r",
+											"                \"type\" : \"array\",\r",
+											"                    \"properties\":{\r",
+											"                        \"items\":{   \r",
+											"                            \"type\": \"string\"\r",
+											"                            }\r",
+											"                    },\r",
+											"            \"tags\": { \r",
+											"                \"type\" : \"array\",\r",
+											"                    \"properties\":{\r",
+											"                        \"id\":                                   { \"type\": [\"number\",\"null\"]},\r",
+											"                        \"name\":                                 { \"type\": [\"string\",\"null\"]} \r",
+											"                        },\r",
+											"                        \"status\":                               { \"type\": [\"string\",\"null\"]}\r",
+											"                        }\r",
+											"                    }\r",
+											"                }\r",
+											"            }\r",
+											"        };\r",
+											"pm.test(\"Validar Schema dos campos de acordo com documentação\",()=> {\r",
+											"    pm.response.to.have.jsonSchema(schema);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "oauth2"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"doggie\",\n    \"photoUrls\": [\n        \"dolor in labore occaecat cupidatat\",\n        \"proident aliqua et nostrud\"\n    ],\n    \"id\": -33119511,\n    \"category\": {\n        \"id\": 81694636,\n        \"name\": \"aliquip irure fugiat pariatur\"\n    },\n    \"tags\": [\n        {\n            \"id\": 717158,\n            \"name\": \"et labore\"\n        },\n        {\n            \"id\": 69068641,\n            \"name\": \"adipisicing culpa Lorem deserunt\"\n        }\n    ],\n    \"status\": \"sold\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/pet",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Contrato invalido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status status 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const schema = {\r",
+											"    \"type\": \"object\",\r",
+											"    \"properties\": {\r",
+											"            \"code\":                                { \"type\": [\"number\",\"null\"]},\r",
+											"            \"type\":                                { \"type\": [\"string\",\"null\"]},\r",
+											"            \"message\":                             { \"type\": [\"string\",\"null\"]}\r",
+											"            \r",
+											"            }\r",
+											"         \r",
+											"    \r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validar Schema dos campos de acordo com documentação\",()=> {\r",
+											"    pm.response.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"    \r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 4000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response no formato json\"), function () {\r",
+											"    pm.response.to.have.jsonBody();\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "oauth2"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"doggie\",\n    \"photoUrls\": [\n        \"dolor in labore occaecat cupidatat\",\n        \"proident aliqua et nostrud\"\n    ],\n    \"id\": gabriel,\n    \"category\": {\n        \"id\": 81694636,\n        \"name\": \"aliquip irure fugiat pariatur\"\n    },\n    \"tags\": [\n        {\n            \"id\": 717158,\n            \"name\": \"et labore\"\n        },\n        {\n            \"id\": 69068641,\n            \"name\": \"adipisicing culpa Lorem deserunt\"\n        }\n    ],\n    \"status\": \"sold\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/pet",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Put",
+					"item": [
+						{
+							"name": "Atualizar dados de pet",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 1000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response no formato json\"), function () {\r",
+											"    pm.response.to.have.jsonBody();\r",
+											"}\r",
+											"const schema = {\r",
+											"    \"type\": \"object\",\r",
+											"        \"properties\": {\r",
+											"            \"id\":                                               { \"type\": [\"number\",\"null\"]},\r",
+											"                \"category\":{ \r",
+											"                    \"type\": \"object\",\r",
+											"                        \"properties\": {       \r",
+											"                        \"id\":                                   { \"type\": [\"number\",\"null\"]},\r",
+											"                        \"name\":                                 { \"type\": [\"string\",\"null\"]}\r",
+											"                },\r",
+											"            \"name\":                                             { \"type\": [\"string\",\"null\"]},\r",
+											"            \"photoUrls\":{ \r",
+											"                \"type\" : \"array\",\r",
+											"                    \"properties\":{\r",
+											"                        \"items\":{   \r",
+											"                            \"type\": \"string\"\r",
+											"                            }\r",
+											"                    },\r",
+											"            \"tags\": { \r",
+											"                \"type\" : \"array\",\r",
+											"                    \"properties\":{\r",
+											"                        \"id\":                                   { \"type\": [\"number\",\"null\"]},\r",
+											"                        \"name\":                                 { \"type\": [\"string\",\"null\"]} \r",
+											"                        },\r",
+											"                        \"status\":                               { \"type\": [\"string\",\"null\"]}\r",
+											"                        }\r",
+											"                    }\r",
+											"                }\r",
+											"            }\r",
+											"        };\r",
+											"pm.test(\"Validar Schema dos campos de acordo com documentação\",()=> {\r",
+											"    pm.response.to.have.jsonSchema(schema);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "oauth2"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"doggie\",\n    \"photoUrls\": [\n        \"irure consequat commodo enim\",\n        \"id dolore irure eu Ut\"\n    ],\n    \"id\": -11192002,\n    \"category\": {\n        \"id\": -5580463,\n        \"name\": \"irure dolore\"\n    },\n    \"tags\": [\n        {\n            \"id\": -16910400,\n            \"name\": \"elit veniam\"\n        },\n        {\n            \"id\": 61662836,\n            \"name\": \"aliqua\"\n        }\n    ],\n    \"status\": \"pending\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/pet",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Contrato invalido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status status 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const schema = {\r",
+											"    \"type\": \"object\",\r",
+											"    \"properties\": {\r",
+											"            \"code\":                                { \"type\": [\"number\",\"null\"]},\r",
+											"            \"type\":                                { \"type\": [\"string\",\"null\"]},\r",
+											"            \"message\":                             { \"type\": [\"string\",\"null\"]}\r",
+											"            \r",
+											"            }\r",
+											"         \r",
+											"    \r",
+											"};\r",
+											"\r",
+											"pm.test(\"Validar Schema dos campos de acordo com documentação\",()=> {\r",
+											"    pm.response.to.have.jsonSchema(schema);\r",
+											"    \r",
+											"    \r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is less than 4000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response no formato json\"), function () {\r",
+											"    pm.response.to.have.jsonBody();\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "oauth2"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"doggie\",\n    \"photoUrls\": [\n        \"irure consequat commodo enim\",\n        \"id dolore irure eu Ut\"\n    ],\n    \"id\": -gabriel,\n    \"category\": {\n        \"id\": -5580463,\n        \"name\": \"irure dolore\"\n    },\n    \"tags\": [\n        {\n            \"id\": -16910400,\n            \"name\": \"elit veniam\"\n        },\n        {\n            \"id\": 61662836,\n            \"name\": \"aliqua\"\n        }\n    ],\n    \"status\": \"pending\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/pet",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"pet"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://petstore.swagger.io/v2",
+			"type": "string"
+		}
+	]
+}
