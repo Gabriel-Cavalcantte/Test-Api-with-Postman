@@ -25,7 +25,7 @@ jobs:
         run: |
           mkdir -p reports/newman
           newman run collections/api-tests.json \
-          --environment environment/dev.environment.json \
+          --environment environments/dev.environment.json \
           --reporters cli,html \
           --reporter-html-export reports/newman/report.html
 
