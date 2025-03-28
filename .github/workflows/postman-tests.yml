@@ -24,13 +24,13 @@ jobs:
       - name: Run API Tests
         run: |
           mkdir -p reports/newman
-          newman run test\collections\api-tests.json \
+          newman run collections/api-tests.json \
           --environment test/collections/environments/env.environment.json \
           --reporters cli,html \
           --reporter-html-export reports/newman/report.html
 
       - name: Upload Test Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Newman Test Report
           path: reports/newman/report.html
