@@ -24,8 +24,8 @@ jobs:
       - name: Run API Tests
         run: |
           mkdir -p reports/newman
-          newman run test/collections/api-tests.json \
-          --environment test/environments/env.environment.json \
+          newman run test\collections\api-tests.json \
+          --environment test/collections/environments/env.environment.json \
           --reporters cli,html \
           --reporter-html-export reports/newman/report.html
 
